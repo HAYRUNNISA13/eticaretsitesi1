@@ -1,0 +1,29 @@
+@model IEnumerable<mvc_project.Models.Category>
+@{
+    ViewData["Title"] = "Kategori Yönetimi";
+}
+<h2>Kategori Yönetimi</h2>
+<a class="btn btn-success mb-2" asp-controller="Category" asp-action="Create">Yeni Kategori</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Açıklama</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td>
+                <a class="btn btn-sm btn-warning" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
+                <a class="btn btn-sm btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a class="btn btn-secondary" asp-action="Index">Admin Paneline Dön</a>

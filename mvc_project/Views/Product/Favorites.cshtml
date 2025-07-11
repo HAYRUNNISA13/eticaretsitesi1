@@ -1,0 +1,44 @@
+@model IEnumerable<mvc_project.Models.Favorite>
+@{
+    ViewData["Title"] = "Favorilerim";
+}
+<h1>Favorilerim</h1>
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Henüz favori ürününüz yok.</div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> Ürün Resmi</th>
+                <th>Ürün</th>
+                <th>Fiyat</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fav in Model)
+            {
+                <tr>
+                <td>
+                            @if (!string.IsNullOrEmpty(fav.Product?.ImageUrl))
+                            {
+                                <img src="@fav.Product.ImageUrl" alt="@fav.Product.Name" style="width:50px; height:50px; object-fit:cover; border-radius:6px; border:1px solid #eee;" />
+                            }
+                        </td>
+                    <td><a asp-controller="Product" asp-action="Details" asp-route-id="@fav.ProductId">@fav.Product?.Name</a></td>
+                    <td>@fav.Product?.Price.ToString("F2")</td>
+                    <td>
+                        <form asp-action="Remove" method="post">
+                            <input type="hidden" name="productId" value="@fav.ProductId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Favorilerden Çıkar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<a class="btn btn-secondary mt-2" asp-controller="Product" asp-action="Index">Alışverişe Devam Et</a>

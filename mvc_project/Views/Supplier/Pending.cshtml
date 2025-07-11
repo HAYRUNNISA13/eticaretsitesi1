@@ -1,0 +1,46 @@
+@model List<mvc_project.Models.SupplierOrder>
+@{
+    ViewData["Title"] = "Bekleyen Siparişler";
+}
+
+<h2>Bekleyen Siparişler</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Tarih</th>
+            <th>Ürünler</th>
+            <th>Adres</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var order in Model)
+    {
+        <tr>
+            <td>@order.Id</td>
+            <td>@order.OrderDate.ToShortDateString()</td>
+            <td>
+                <ul>
+                @foreach (var item in order.Items)
+                {
+                    <li>@item.Product.Name - @item.Quantity</li>
+                }
+                </ul>
+            </td>
+            <td>@order.Address</td>
+            <td>
+                <form asp-action="Approve" method="post" style="display:inline">
+                    <input type="hidden" name="id" value="@order.Id" />
+                    <button class="btn btn-success btn-sm">Onayla</button>
+                </form>
+                <form asp-action="Reject" method="post" style="display:inline">
+                    <input type="hidden" name="id" value="@order.Id" />
+                    <button class="btn btn-danger btn-sm">Reddet</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

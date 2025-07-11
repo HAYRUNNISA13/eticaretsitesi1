@@ -1,0 +1,54 @@
+@model List<mvc_project.Models.Order>
+@{
+    ViewData["Title"] = "Depo Yönetimi - Siparişler";
+}
+
+<h2>Siparişler</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Sipariş No</th>
+
+            <th>Müşteri</th>
+            <th>Sipariş edilen ürün</th>
+            <th>Durum</th>
+            <th>Sipariş Tarihi</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var order in Model)
+    {
+        <tr>
+            <td>@order.Id</td>
+            
+            <td>@order.UserId</td>
+             <td>
+    <ul>
+        @foreach (var item in order.Items)
+        {
+            <li>@item.Product.Name (Adet: @item.Quantity)</li>
+        }
+    </ul>
+</td>
+
+            <td>@order.Status.ToString()</td>
+            <td>@order.OrderDate.ToShortDateString()</td>
+            <td>
+                <form asp-action="UpdateStatus" method="post" class="d-flex gap-2 align-items-center">
+                    <input type="hidden" name="orderId" value="@order.Id" />
+                    <select name="newStatus" class="form-select form-select-sm" style="width:auto;">
+                        <option value="Pending" selected="@(order.Status == OrderStatus.Pending)">Beklemede</option>
+                        <option value="Preparing" selected="@(order.Status == OrderStatus.Preparing)">Hazırlanıyor</option>
+                        <option value="Shipped" selected="@(order.Status == OrderStatus.Shipped)">Yola Çıktı</option>
+                        <option value="Delivered" selected="@(order.Status == OrderStatus.Delivered)">Teslim Edildi</option>
+                        <option value="Cancelled" selected="@(order.Status == OrderStatus.Cancelled)">İptal Edildi</option>
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-primary">Güncelle</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

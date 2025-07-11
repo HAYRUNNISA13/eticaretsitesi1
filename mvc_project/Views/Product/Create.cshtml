@@ -1,0 +1,63 @@
+@model mvc_project.Models.Product
+@{
+    ViewData["Title"] = "Ürün Oluştur";
+    var categories = ViewBag.Categories as List<mvc_project.Models.Category>;
+}
+@if(ViewBag.Errors != null && ((List<string>)ViewBag.Errors).Any())
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach(var error in (List<string>)ViewBag.Errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
+<h1>Ürün Oluştur</h1>
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Stock" class="form-label"></label>
+        <input asp-for="Stock" class="form-control" />
+        <span asp-validation-for="Stock" class="text-danger"></span>
+    </div>
+   <div class="mb-3">
+    <label asp-for="SupplierId" class="form-label">Tedarikçi</label>
+    <select asp-for="SupplierId" class="form-select" asp-items="@(new SelectList(ViewBag.Suppliers, "Id", "UserName"))">
+        <option value="">Seçiniz</option>
+    </select>
+    <span asp-validation-for="SupplierId" class="text-danger"></span>
+</div>
+
+
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label">Kategori</label>
+        <select asp-for="CategoryId" class="form-select" asp-items="@(new SelectList(categories, "Id", "Name"))"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CampaignId" class="form-label">Kampanya</label>
+        <select asp-for="CampaignId" class="form-select" asp-items="@(new SelectList(ViewBag.Campaigns, "Id", "Name"))">
+            <option value="">Kampanyasız</option>
+        </select>
+        <span asp-validation-for="CampaignId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>

@@ -1,0 +1,29 @@
+@model IEnumerable<mvc_project.Models.Order>
+@{
+    ViewData["Title"] = "Sipariş Yönetimi";
+}
+<h2>Sipariş Yönetimi</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Kullanıcı</th>
+            <th>Tarih</th>
+            <th>Toplam</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.User?.UserName</td>
+            <td>@item.OrderDate.ToShortDateString()</td>
+             <td>@item.Total.ToString("F2")</td>
+            <td>
+                <a class="btn btn-sm btn-info" asp-controller="Admin" asp-action="Details" asp-route-id="@item.Id">Detay</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a class="btn btn-secondary" asp-action="Index">Admin Paneline Dön</a>

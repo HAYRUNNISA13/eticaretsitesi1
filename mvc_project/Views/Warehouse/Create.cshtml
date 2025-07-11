@@ -1,0 +1,45 @@
+@model mvc_project.Models.SupplierOrderCreateViewModel
+
+@{
+    ViewData["Title"] = "Yeni Sipariş Talebi";
+}
+
+<h2>Yeni Sipariş Talebi Oluştur</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label">Adres</label>
+        <input asp-for="Address" class="form-control" placeholder="Adresinizi giriniz" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <h4>Ürünler</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ürün</th>
+                <th>Miktar</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for (int i = 0; i < Model.Products.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Model.Products[i].Name
+                    <input type="hidden" asp-for="@Model.OrderItems[i].ProductId" />
+                </td>
+                <td>
+                    <input asp-for="@Model.OrderItems[i].Quantity" class="form-control" type="number" min="0" />
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Talebi Gönder</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

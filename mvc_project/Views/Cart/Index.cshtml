@@ -1,0 +1,93 @@
+@model mvc_project.Models.Cart
+@inject ApplicationDbContext _context
+
+@{
+    ViewData["Title"] = "Sepetim";
+
+    var campaigns = _context.Campaigns
+        .Where(c => c.StartDate <= DateTime.Now && c.EndDate >= DateTime.Now)
+        .ToList();
+}
+
+<h1 class="mb-4"><i class="bi bi-cart"></i> Sepetim</h1>
+
+@if (Model.Items == null || !Model.Items.Any())
+{
+    <div class="alert alert-info">Sepetiniz boş.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Görsel</th>
+                    <th>Ürün</th>
+                    <th>Adet</th>
+                    <th>Birim Fiyat</th>
+                    <th>Toplam</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.Product?.ImageUrl))
+                            {
+                                <img src="@item.Product.ImageUrl" alt="@item.Product.Name"
+                                     style="width:50px; height:50px; object-fit:cover; border-radius:6px; border:1px solid #eee;" />
+                            }
+                        </td>
+                        <td>@item.Product?.Name</td>
+                        <td>@item.Quantity</td>
+                        <td><span class="badge bg-success">@item.Product?.Price.ToString("C0")</span></td>
+                        <td><span class="fw-bold">
+                            @(item.Product != null ? (item.Product.Price * item.Quantity).ToString("C0") : "-")
+                        </span></td>
+                        <td>
+                            <form asp-action="RemoveFromCart" method="post">
+                                <input type="hidden" name="itemId" value="@item.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    
+    @if (campaigns.Any())
+    {
+        <form asp-action="ApplyCampaign" method="post" class="mb-3">
+            <div class="row align-items-end">
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Kampanya Seç:</label>
+                    <select name="campaignId" class="form-select">
+                        @foreach (var c in campaigns)
+                        {
+                            <option value="@c.Id">@c.Name (%@((c.DiscountRate * 100).ToString("C0")) indirim)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-warning mt-2">
+                        <i class="bi bi-percent"></i> Kampanyayı Uygula
+                    </button>
+                </div>
+            </div>
+        </form>
+    }
+
+    <a class="btn btn-success" asp-controller="Order" asp-action="Create">
+        <i class="bi bi-bag-check"></i> Siparişi Tamamla
+    </a>
+}
+
+<a class="btn btn-secondary mt-2" asp-controller="Product" asp-action="Index">
+    <i class="bi bi-arrow-left"></i> Alışverişe Devam Et
+</a>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">

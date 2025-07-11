@@ -1,0 +1,39 @@
+@model IEnumerable<mvc_project.Models.ReturnRequest>
+<h2>İade Talepleri</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>İade ID</th>
+            <th>Sipariş No</th>
+            <th>İade Nedeni</th>
+            <th>Talep Tarihi</th>
+            <th>Onay Durumu</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var request in Model)
+    {
+        <tr>
+            <td>@request.Id</td>
+            <td>@request.OrderId</td>
+            <td>@request.Reason</td>
+            <td>@request.RequestDate.ToShortDateString()</td>
+            <td>@(request.IsApproved ? "Onaylandı" : "Beklemede")</td>
+            <td>
+                @if(!request.IsApproved)
+                {
+                    <form asp-action="ApproveReturn" method="post">
+                        <input type="hidden" name="id" value="@request.Id" />
+                        <button type="submit" class="btn btn-success btn-sm">Onayla</button>
+                    </form>
+                }
+                else
+                {
+                    <span class="text-success">Onaylandı</span>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

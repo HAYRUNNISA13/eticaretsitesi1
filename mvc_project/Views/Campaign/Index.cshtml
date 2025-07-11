@@ -1,0 +1,39 @@
+@model IEnumerable<mvc_project.Models.Campaign>
+@{
+    ViewData["Title"] = "Kampanyalar";
+}
+
+<div class="container my-5">
+    <h2 class="mb-4 fw-bold text-center">Kampanyalar</h2>
+
+    <div class="table-responsive shadow rounded">
+        <table class="table table-bordered table-hover text-center align-middle" style="table-layout: fixed; width: 100%;">
+            <thead class="table-dark">
+                <tr>
+                    <th style="width: 20%;">Ad</th>
+                    <th style="width: 30%;">Açıklama</th>
+                    <th style="width: 10%;">İndirim</th>
+                    <th style="width: 15%;">Başlangıç</th>
+                    <th style="width: 15%;">Bitiş</th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-semibold text-break">@item.Name</td>
+                        <td class="text-break">@item.Description</td>
+                        <td class="text-success fw-bold">%@(Math.Round(item.DiscountRate * 100))</td>
+                        <td>@item.StartDate.ToShortDateString()</td>
+                        <td>@item.EndDate.ToShortDateString()</td>
+                        
+
+                       
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+@model List<UserMessage>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-white me-3 position-relative" asp-controller="Message" asp-action="Index" id="messagesDropdown" data-bs-toggle="dropdown" >
+        <i class="bi bi-chat-fill fs-5"></i>
+        @if (Model.Any())
+        {
+            <span  class="position-absolute top-0 start-100 translate-middle badge bg-danger">@Model.Count</span>
+        }
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="messagesDropdown">
+        @if (!Model.Any())
+        {
+            <li><span class="dropdown-item">Yeni mesaj yok</span></li>
+        }
+        else
+        {
+            @foreach (var msg in Model)
+            {
+                <li><span class="dropdown-item text-wrap">@msg.Message</span></li>
+            }
+        }
+        <li><hr class="dropdown-divider" /></li>
+        <li><a class="dropdown-item text-center" asp-controller="Message" asp-action="Index">Tümünü Gör</a></li>
+    </ul>
+</li>

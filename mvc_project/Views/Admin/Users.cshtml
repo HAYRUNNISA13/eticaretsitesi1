@@ -1,0 +1,29 @@
+@model IEnumerable<mvc_project.Models.AppUser>
+
+
+@{
+    ViewData["Title"] = "Kullanıcı Yönetimi";
+}
+<h2>Kullanıcı Yönetimi</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Kullanıcı Adı</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>
+                <a class="btn btn-sm btn-info" asp-controller="Admin" asp-action="Profile" asp-route-id="@user.Id">Detay</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a class="btn btn-secondary" asp-action="Index">Admin Paneline Dön</a>

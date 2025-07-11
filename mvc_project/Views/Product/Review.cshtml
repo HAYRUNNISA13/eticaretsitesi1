@@ -1,0 +1,53 @@
+@model mvc_project.Models.ProductDetailViewModel
+
+<h2>@Model.Product.Name</h2>
+<p>@Model.Product.Description</p>
+<p>Fiyat: @Model.Product.Price ₺</p>
+
+<hr />
+
+<h3>Yorumlar (@Model.Reviews.Count)</h3>
+
+@if (!Model.Reviews.Any())
+{
+    <p>Henüz yorum yapılmamış.</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var review in Model.Reviews)
+        {
+            <li class="list-group-item">
+                <strong>@review.User.FullName</strong> - @review.CreatedAt.ToShortDateString() <br />
+                Puan: @review.Rating / 5 <br />
+                @review.Comment
+            </li>
+        }
+    </ul>
+}
+
+<hr />
+
+@if (Model.HasPurchased)
+{
+    <h3>Yorum Yaz</h3>
+    <form asp-action="Review" method="post">
+        <input type="hidden" name="ProductId" value="@Model.Product.Id" />
+
+        <div class="mb-3">
+            <label for="Rating" class="form-label">Puan (1-5)</label>
+            <input type="number" name="Rating" min="1" max="5" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="Comment" class="form-label">Yorum</label>
+            <textarea name="Comment" class="form-control" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Gönder</button>
+    </form>
+}
+else
+{
+    <p>Bu ürünü satın almadan yorum yapamazsınız.</p>
+}

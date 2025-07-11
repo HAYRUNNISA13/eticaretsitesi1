@@ -1,0 +1,48 @@
+@model IEnumerable<mvc_project.Models.Campaign>
+@{
+    ViewData["Title"] = "Kampanya Yönetimi";
+}
+<h2>Kampanya Yönetimi</h2>
+<a class="btn btn-success mb-2" asp-controller="Campaign" asp-action="Create">Yeni Kampanya</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>İndirim Oranı</th>
+            <th>Başlangıç</th>
+            <th>Bitiş</th>
+            <th>Ürünler</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>%@(Math.Round(item.DiscountRate * 100))</td>
+            <td>@item.StartDate.ToShortDateString()</td>
+            <td>@item.EndDate.ToShortDateString()</td>
+            <td>
+                @if (item.Products != null && item.Products.Any())
+                {
+                    <ul class="mb-0 ps-3">
+                    @foreach (var p in item.Products) {
+                        <li>@p.Name</li>
+                    }
+                    </ul>
+                }
+                else
+                {
+                    <span class="text-muted">Yok</span>
+                }
+            </td>
+            <td>
+                <a class="btn btn-sm btn-warning" asp-controller="Campaign" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
+                <a class="btn btn-sm btn-danger" asp-controller="Campaign" asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a class="btn btn-secondary" asp-action="Index">Admin Paneline Dön</a>

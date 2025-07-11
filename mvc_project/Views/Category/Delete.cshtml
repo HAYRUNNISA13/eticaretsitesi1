@@ -1,0 +1,15 @@
+@model mvc_project.Models.Category
+@{
+    ViewData["Title"] = "Kategori Sil";
+}
+<h1>Kategori Sil</h1>
+<h3>Silmek istediğinize emin misiniz?</h3>
+<div>
+    <h4>@Model.Name</h4>
+    <p>@Model.Description</p>
+</div>
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>

@@ -1,0 +1,48 @@
+@model mvc_project.Models.InventoryViewModel
+@{
+    ViewData["Title"] = "Stok Takibi";
+}
+
+<h2>Stok Takibi</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Ürün İsmi</th>
+            <th>Güncel Stok</th>
+            <th>Gelecek Miktar</th>
+            <th>Beklenen Tarih</th>
+            <th>Tedarikçi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            var incoming = Model.IncomingStocks
+                .Where(s => s.ProductId == product.Id)
+                .OrderBy(s => s.ExpectedDate);
+
+            if (!incoming.Any())
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Stock</td>
+                    <td colspan="3" class="text-muted">Beklenen ürün yok</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var stock in incoming)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Stock</td>
+                        <td>@stock.Quantity</td>
+                        <td>@stock.ExpectedDate.ToShortDateString()</td>
+                        <td>@stock.SupplierName</td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
