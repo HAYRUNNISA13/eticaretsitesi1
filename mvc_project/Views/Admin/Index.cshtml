@@ -1,11 +1,35 @@
 @{
     ViewData["Title"] = "Admin Paneli";
 }
-<h1>Admin Paneli</h1>
-<div class="list-group">
-    <a class="list-group-item list-group-item-action" asp-action="Categories">Kategoriler</a>
-    <a class="list-group-item list-group-item-action" asp-action="Products">Ürünler</a>
-    <a class="list-group-item list-group-item-action" asp-action="Orders">Siparişler</a>
-    <a class="list-group-item list-group-item-action" asp-action="Users">Kullanıcılar</a>
-    <a class="list-group-item list-group-item-action" asp-action="Campaigns">Kampanyalar</a>
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0"><i class="bi bi-speedometer2"></i> Admin Paneli</h3>
+        </div>
+        <div class="card-body">
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" asp-action="Categories">
+                    <span><i class="bi bi-tags-fill me-2 text-primary"></i> Kategoriler</span>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" asp-action="Products">
+                    <span><i class="bi bi-box-seam me-2 text-success"></i> Ürünler</span>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" asp-action="Orders">
+                    <span><i class="bi bi-cart-check me-2 text-warning"></i> Siparişler</span>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" asp-action="Users">
+                    <span><i class="bi bi-people-fill me-2 text-info"></i> Kullanıcılar</span>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" asp-action="Campaigns">
+                    <span><i class="bi bi-megaphone-fill me-2 text-danger"></i> Kampanyalar</span>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>

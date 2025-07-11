@@ -103,3 +103,4 @@
 /Users/hayrunnisacelik/Downloads/eticaretsitesi1/mvc_project/obj/Debug/net8.0/mvc_project.RazorAssemblyInfo.cs
 /Users/hayrunnisacelik/Downloads/eticaretsitesi1/mvc_project/obj/Debug/net8.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
 /Users/hayrunnisacelik/Downloads/eticaretsitesi1/mvc_project/obj/Debug/net8.0/scopedcss/projectbundle/mvc_project.bundle.scp.css
+/Users/hayrunnisacelik/Downloads/eticaretsitesi1/mvc_project/obj/Debug/net8.0/mvc_project.sourcelink.json
